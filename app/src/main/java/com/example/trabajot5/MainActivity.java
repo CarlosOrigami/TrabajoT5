@@ -42,17 +42,17 @@ public class MainActivity extends AppCompatActivity {
     private void cargarLista() {
         listaMultimedia = new ArrayList<>();
 
-        listaMultimedia.add(new MultimediaItem("Video 1", "Descripción del Video 1",
+        listaMultimedia.add(new MultimediaItem("Video 1", "Un paisaje cubierto de nieve.",
                 "android.resource://" + getPackageName() + "/" + R.raw.video1, MultimediaItem.TipoMultimedia.VIDEO));
 
-        listaMultimedia.add(new MultimediaItem("Video 2", "Descripción del Video 2",
+        listaMultimedia.add(new MultimediaItem("Video 2", "Deliciosa preparación de una pizza.",
                 "android.resource://" + getPackageName() + "/" + R.raw.video2, MultimediaItem.TipoMultimedia.VIDEO));
 
 
-        listaMultimedia.add(new MultimediaItem("Audio 1", "Descripción del Audio 1",
+        listaMultimedia.add(new MultimediaItem("Audio 1", "Ritmo vibrantes de dancehall.",
                 "android.resource://" + getPackageName() + "/" + R.raw.audio1, MultimediaItem.TipoMultimedia.AUDIO));
 
-        listaMultimedia.add(new MultimediaItem("Audio 2", "Descripción del Audio 2",
+        listaMultimedia.add(new MultimediaItem("Audio 2", "Ritmo perfecto para una fiesta.",
                 "android.resource://" + getPackageName() + "/" + R.raw.audio2, MultimediaItem.TipoMultimedia.AUDIO));
 
         listaMultimedia.add(new MultimediaItem("Página Web 1", "Google", "https://www.google.com", MultimediaItem.TipoMultimedia.WEB));

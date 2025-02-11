@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -20,9 +21,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-    private ArrayList<MultimediaItem> lista;
-    private Context context;
-    private MediaPlayer mediaPlayer; // 🚩 Declaramos mediaPlayer como una variable de clase
+    private final ArrayList<MultimediaItem> lista;
+    private final Context context;
+    private MediaPlayer mediaPlayer;
 
     public Adapter(Context context, ArrayList<MultimediaItem> lista) {
         this.context = context;
@@ -42,8 +43,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.txtTitulo.setText(item.getTitulo());
         holder.txtDescripcion.setText(item.getDescripcion());
 
+
+        switch (item.getTipo()) {
+            case VIDEO:
+                holder.iconoMultimedia.setImageResource(R.drawable.ic_video);
+                break;
+            case AUDIO:
+                holder.iconoMultimedia.setImageResource(R.drawable.ic_audio);
+                break;
+            case WEB:
+                holder.iconoMultimedia.setImageResource(R.drawable.ic_web);
+                break;
+        }
+
         holder.itemView.setOnClickListener(v -> mostrarDialog(item));
     }
+
 
     @Override
     public int getItemCount() {
@@ -52,11 +67,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtTitulo, txtDescripcion;
+        ImageView iconoMultimedia;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitulo = itemView.findViewById(R.id.txtTitulo);
             txtDescripcion = itemView.findViewById(R.id.txtDescripcion);
+            iconoMultimedia = itemView.findViewById(R.id.iconoMultimedia);
         }
     }
 
@@ -70,109 +87,35 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         VideoView videoView = dialogView.findViewById(R.id.dialogVideoView);
         WebView webView = dialogView.findViewById(R.id.dialogWebView);
 
-        // Botones de control para el vídeo
-        Button btnPausarReanudar = dialogView.findViewById(R.id.btnPausarReanudar);
-        Button btnAvanzar = dialogView.findViewById(R.id.btnAvanzar);
-        Button btnRetroceder = dialogView.findViewById(R.id.btnRetroceder);
-        View videoControls = dialogView.findViewById(R.id.videoControls);
-
-        // Botones de control para el audio
-        Button btnAudioAvanzar = dialogView.findViewById(R.id.btnAudioAvanzar);
-        Button btnAudioRetroceder = dialogView.findViewById(R.id.btnAudioRetroceder);
-        Button btnAudioDetener = dialogView.findViewById(R.id.btnAudioDetener);
-        View audioControls = dialogView.findViewById(R.id.audioControls);
-
         txtTitulo.setText(item.getTitulo());
         txtDescripcion.setText(item.getDescripcion());
 
         switch (item.getTipo()) {
             case VIDEO:
                 videoView.setVisibility(View.VISIBLE);
-                videoControls.setVisibility(View.VISIBLE);
                 videoView.setVideoURI(Uri.parse(item.getUrl()));
 
-                // Reproducir automáticamente cuando esté listo
-                videoView.setOnPreparedListener(MediaPlayer::start);
+                // Configurar MediaController
+                MediaController mediaController = new MediaController(context);
+                mediaController.setAnchorView(videoView);
+                videoView.setMediaController(mediaController);
 
-                // Botón Pausar/Reanudar
-                btnPausarReanudar.setOnClickListener(v -> {
-                    if (videoView.isPlaying()) {
-                        videoView.pause();
-                        btnPausarReanudar.setText("Reanudar");
-                    } else {
-                        videoView.start();
-                        btnPausarReanudar.setText("Pausar");
-                    }
-                });
-
-                // Botón Avanzar 5 segundos
-                btnAvanzar.setOnClickListener(v -> {
-                    int newPosition = videoView.getCurrentPosition() + 5000;
-                    if (newPosition < videoView.getDuration()) {
-                        videoView.seekTo(newPosition);
-                    }
-                });
-
-                // Botón Retroceder 5 segundos
-                btnRetroceder.setOnClickListener(v -> {
-                    int newPosition = videoView.getCurrentPosition() - 5000;
-                    if (newPosition > 0) {
-                        videoView.seekTo(newPosition);
-                    } else {
-                        videoView.seekTo(0);
-                    }
+                videoView.requestFocus();
+                videoView.setOnPreparedListener(mp -> {
+                    mp.start();
+                    mediaController.show(0);
                 });
                 break;
 
             case AUDIO:
-                audioControls.setVisibility(View.VISIBLE);
-
                 try {
-                    if (item.getUrl().startsWith("android.resource://")) {
-                        int resId = context.getResources().getIdentifier(
-                                item.getUrl().substring(item.getUrl().lastIndexOf("/") + 1),
-                                "raw",
-                                context.getPackageName()
-                        );
-
-                        mediaPlayer = MediaPlayer.create(context, resId);
-                        mediaPlayer.start();
-                    } else {
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setDataSource(item.getUrl());
-                        mediaPlayer.prepare();
-                        mediaPlayer.start();
-                    }
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setDataSource(item.getUrl());
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                // Botón Detener
-                btnAudioDetener.setOnClickListener(v -> {
-                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                        mediaPlayer.release();
-                        mediaPlayer = null; // Liberar el recurso
-                    }
-                });
-
-                // Botón Avanzar 5 segundos
-                btnAudioAvanzar.setOnClickListener(v -> {
-                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                        int newPosition = mediaPlayer.getCurrentPosition() + 5000;
-                        if (newPosition < mediaPlayer.getDuration()) {
-                            mediaPlayer.seekTo(newPosition);
-                        }
-                    }
-                });
-
-                // Botón Retroceder 5 segundos
-                btnAudioRetroceder.setOnClickListener(v -> {
-                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                        int newPosition = mediaPlayer.getCurrentPosition() - 5000;
-                        mediaPlayer.seekTo(Math.max(newPosition, 0));
-                    }
-                });
                 break;
 
             case WEB:

@@ -28,80 +28,11 @@
         android:layout_height="200dp"
         android:visibility="gone" />
 
-    <!-- Controles de reproducción para el vídeo -->
-    <LinearLayout
-        android:id="@+id/videoControls"
+    <MediaController
+        android:id="@+id/dialogMediaController"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-
-        <Button
-            android:id="@+id/btnRetroceder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⏪"
-            android:textSize="20sp"
-            android:padding="8dp" />
-
-        <Button
-            android:id="@+id/btnPausarReanudar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⏯️"
-            android:textSize="20sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:padding="8dp" />
-
-        <Button
-            android:id="@+id/btnAvanzar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⏩"
-            android:textSize="20sp"
-            android:padding="8dp" />
-    </LinearLayout>
-
-    <!-- 🚩 Controles de reproducción para el audio -->
-    <LinearLayout
-        android:id="@+id/audioControls"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="8dp">
-
-        <Button
-            android:id="@+id/btnAudioRetroceder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⏪"
-            android:textSize="20sp"
-            android:padding="8dp" />
-
-        <Button
-            android:id="@+id/btnAudioDetener"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⏹️"
-            android:textSize="20sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:padding="8dp" />
-
-        <Button
-            android:id="@+id/btnAudioAvanzar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⏩"
-            android:textSize="20sp"
-            android:padding="8dp" />
-    </LinearLayout>
+        android:visibility="gone" />
 
     <WebView
         android:id="@+id/dialogWebView"
@@ -110,3 +41,4 @@
         android:visibility="gone" />
 
 </LinearLayout>
+
