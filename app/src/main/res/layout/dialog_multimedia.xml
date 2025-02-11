@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/dialogTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Título"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/dialogDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        android:textSize="14sp"
+        android:paddingBottom="8dp" />
+
+    <VideoView
+        android:id="@+id/dialogVideoView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone" />
+
+    <!-- Controles de reproducción para el vídeo -->
+    <LinearLayout
+        android:id="@+id/videoControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/btnRetroceder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏪"
+            android:textSize="20sp"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/btnPausarReanudar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏯️"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/btnAvanzar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏩"
+            android:textSize="20sp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <!-- 🚩 Controles de reproducción para el audio -->
+    <LinearLayout
+        android:id="@+id/audioControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/btnAudioRetroceder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏪"
+            android:textSize="20sp"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/btnAudioDetener"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏹️"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/btnAudioAvanzar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏩"
+            android:textSize="20sp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/dialogWebView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone" />
+
+</LinearLayout>
